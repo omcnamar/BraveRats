@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "706877918864",
+    "firebase_url": "https://braverats.firebaseio.com",
+    "project_id": "braverats",
+    "storage_bucket": "braverats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706877918864:android:fc7dee40a0ba65dc",
+        "android_client_info": {
+          "package_name": "com.olegmcnamara.braverats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "706877918864-qb1a5a7dhjlapik11oh6a4j4nfv5qfb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBBVeuZMClCTcYORK20JwM9R8ojvZhaVY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
