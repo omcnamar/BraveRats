@@ -2,7 +2,10 @@ package com.olegmcnamara.braverats
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.widget.Toast
+import com.olegmcnamara.braverats.remote.database.EventType
+import com.olegmcnamara.braverats.remote.database.FirebaseDatabaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +24,15 @@ class MainActivity : AppCompatActivity() {
             playRound()
         }
         updateUI()
+
+        val gameTable = FirebaseDatabaseHelper("Game",Game::class.java)
+        val game = Game(playerOne, playerTwo)
+        gameTable.insert(game, {
+
+        }, {
+
+        })
+        setUpGameListener(gameTable)
     }
 
     private fun playRound() {
@@ -48,5 +60,32 @@ class MainActivity : AppCompatActivity() {
 
         et_player_one.setText("")
         et_player_two.setText("")
+    }
+
+    private fun createGame(player: Player, player2: Player) {
+
+
+    }
+
+    private fun setUpGameListener(table: FirebaseDatabaseHelper<Game>) {
+        table.addDataChangedListener{ game, eventType ->
+            when(eventType) {
+                EventType.childAdded -> {
+
+                }
+                EventType.childDeleted -> {
+
+                }
+                EventType.childChanged -> {
+                    et_player_one.text = Editable.Factory.getInstance().newEditable("${game.player?.currentPlayedCard}")
+                }
+                EventType.childMoved -> {
+
+                }
+                else -> {
+
+                }
+            }
+        }
     }
 }
