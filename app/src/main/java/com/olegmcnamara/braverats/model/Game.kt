@@ -1,4 +1,6 @@
-package com.olegmcnamara.braverats
+package com.olegmcnamara.braverats.model
+
+import com.olegmcnamara.braverats.model.Player
 
 class Game {
     var player: Player? = null

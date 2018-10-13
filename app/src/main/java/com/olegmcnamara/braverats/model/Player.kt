@@ -1,4 +1,4 @@
-package com.olegmcnamara.braverats
+package com.olegmcnamara.braverats.model
 
 class Player {
     var score:Int = 0

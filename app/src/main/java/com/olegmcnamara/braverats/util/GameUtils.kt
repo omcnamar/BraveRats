@@ -1,4 +1,6 @@
-package com.olegmcnamara.braverats
+package com.olegmcnamara.braverats.util
+
+import com.olegmcnamara.braverats.model.Player
 
 class GameUtils {
 
