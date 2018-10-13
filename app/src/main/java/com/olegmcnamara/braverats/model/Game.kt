@@ -7,9 +7,11 @@ class Game {
     var player2: Player? = null
 
     constructor()
-    constructor(player: Player,
-                player2: Player) {
+    constructor(player: Player?,
+                player2: Player?) {
         this.player = player
         this.player2 = player2
     }
+
+
 }

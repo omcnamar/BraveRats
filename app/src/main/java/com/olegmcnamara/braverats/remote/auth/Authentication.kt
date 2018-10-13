@@ -30,7 +30,7 @@ class Authentication private constructor(){
     }
 
     private val mAuth = FirebaseAuth.getInstance()
-    var currentUser: FirebaseUser? = mAuth.currentUser
+    var firebaseUser: FirebaseUser? = mAuth.currentUser
         private set
 
     fun createUserWithAdmin(email: String,
@@ -73,13 +73,13 @@ class Authentication private constructor(){
 
     fun createUser(email: String,
                    password: String,
-                   success: (FirebaseUser) -> Unit,
+                   success: (FirebaseUser?) -> Unit,
                    failure: (Exception) -> Unit) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        success(currentUser!!)
+                        success(mAuth.currentUser)
                     } else {
                         task.exception?.let { exception ->
                             failure(exception)
@@ -95,8 +95,8 @@ class Authentication private constructor(){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        currentUser = mAuth.currentUser
-                        success(currentUser!!)
+                        firebaseUser = mAuth.currentUser
+                        success(firebaseUser!!)
                     } else {
                         task.exception?.let { exception ->
                             failure(exception)
@@ -107,7 +107,7 @@ class Authentication private constructor(){
 
     fun logoutUser(success: () -> Unit) {
         mAuth.signOut()
-        currentUser = null
+        firebaseUser = null
         success()
     }
 

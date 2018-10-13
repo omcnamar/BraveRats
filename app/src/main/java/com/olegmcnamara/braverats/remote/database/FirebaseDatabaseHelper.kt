@@ -1,9 +1,6 @@
 package com.olegmcnamara.braverats.remote.database
 
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import java.lang.Exception
 
 enum class EventType {
@@ -21,8 +18,8 @@ class FirebaseDatabaseHelper<T>(tableName: String,
     private val type = valueType
 
     fun insert(row: Any,
-               success: () -> Unit,
-               failure: (Exception) -> Unit) {
+               success: (String) -> Unit,
+               failure: (Exception) -> Unit){
 
         val id = mTable.push().key
         id?.let {
@@ -30,7 +27,9 @@ class FirebaseDatabaseHelper<T>(tableName: String,
 
                 if (task.isSuccessful) {
                     // add id to the newly created row
-                    update(arrayListOf(id, "id"), id, success, failure)
+                    update(arrayListOf(it, "id"), it, {}, failure)
+                    success(it)
+
                 } else {
                     task.exception?.let {
                         failure(it)
@@ -38,7 +37,24 @@ class FirebaseDatabaseHelper<T>(tableName: String,
                 }
             }
         }
+    }
 
+    fun insertWithId(row: Any,
+                     id: String,
+                     success: () -> Unit,
+                     failure: (Exception) -> Unit) {
+
+        mTable.child(id).setValue(row).addOnCompleteListener{ task ->
+
+            if (task.isSuccessful) {
+                // add id to the newly created row
+                update(arrayListOf(id, "id"), id, success, failure)
+            } else {
+                task.exception?.let {
+                    failure(it)
+                }
+            }
+        }
     }
 
     fun update(path: ArrayList<String>,
@@ -120,5 +136,4 @@ class FirebaseDatabaseHelper<T>(tableName: String,
             }
         })
     }
-
 }
