@@ -31,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
             startMainActivity()
         }
         btnRegister.setOnClickListener { attemptRegister() }
+        btnSignIn.setOnClickListener { logIn() }
     }
 
     private fun attemptRegister() {
@@ -59,6 +60,20 @@ class LoginActivity : AppCompatActivity() {
                     startMainActivity()
                 }, failure = { error ->
                     Toast.makeText(this, "Failed To register", Toast.LENGTH_SHORT).show()
+                })
+    }
+
+    private fun logIn() {
+        val email = tvEmail.text.toString()
+        val password = etPassword.text.toString()
+
+        Authentication.instance.loginUser(
+                email = email,
+                password = password,
+                success = {
+                    startMainActivity()
+                }, failure = {
+                    Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show()
                 })
     }
 
