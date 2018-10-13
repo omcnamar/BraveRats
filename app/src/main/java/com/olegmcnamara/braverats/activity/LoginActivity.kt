@@ -39,42 +39,49 @@ class LoginActivity : AppCompatActivity() {
         val email = tvEmail.text.toString()
         val password = etPassword.text.toString()
 
-        // create user with firebase authentication
-        Authentication.instance.createUser(
-                email = email,
-                password = password,
-                success = { firebaseUser ->
+        if (!email.isEmpty() && !password.isEmpty() && !userName.isEmpty()) {
+            // create user with firebase authentication
+            Authentication.instance.createUser(
+                    email = email,
+                    password = password,
+                    success = { firebaseUser ->
 
-                    // add user to database
-                    val id = firebaseUser?.uid.toString()
-                    val userTable = FirebaseDatabaseHelper("Users",User::class.java)
-                    val user = User(id = id, userName = userName, email = email)
-                    userTable.insertWithId(
-                            row = user,
-                            id = id,
-                            success = {
-                                startMainActivity()
-                            }, failure = {
-                                Toast.makeText(this, "Some thing else went wrong", Toast.LENGTH_SHORT).show()
-                            })
-                    startMainActivity()
-                }, failure = { error ->
-                    Toast.makeText(this, "Failed To register", Toast.LENGTH_SHORT).show()
-                })
+                        // add user to database
+                        val id = firebaseUser?.uid.toString()
+                        val userTable = FirebaseDatabaseHelper("Users", User::class.java)
+                        val user = User(id = id, userName = userName, email = email)
+                        userTable.insertWithId(
+                                row = user,
+                                id = id,
+                                success = {
+                                    startMainActivity()
+                                }, failure = {
+                                    Toast.makeText(this, "Some thing else went wrong", Toast.LENGTH_SHORT).show()
+                                })
+                    }, failure = { error ->
+                        Toast.makeText(this, "Failed To register", Toast.LENGTH_SHORT).show()
+                    })
+        } else {
+            Toast.makeText(this, "Please Fill username, email and Password", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun logIn() {
         val email = tvEmail.text.toString()
         val password = etPassword.text.toString()
 
-        Authentication.instance.loginUser(
-                email = email,
-                password = password,
-                success = {
-                    startMainActivity()
-                }, failure = {
-                    Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show()
-                })
+        if (!email.isEmpty() && !password.isEmpty()) {
+            Authentication.instance.loginUser(
+                    email = email,
+                    password = password,
+                    success = {
+                        startMainActivity()
+                    }, failure = {
+                        Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show()
+                    })
+        } else {
+            Toast.makeText(this, "Please Fill email and Password", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startMainActivity() {
