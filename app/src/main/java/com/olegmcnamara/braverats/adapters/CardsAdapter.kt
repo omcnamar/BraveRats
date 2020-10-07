@@ -25,6 +25,7 @@ class CardsAdapter constructor() : RecyclerView.Adapter<CardsAdapter.ViewHolder>
 
     fun setCards(cards: ArrayList<Card>) {
         this.cards = cards
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
